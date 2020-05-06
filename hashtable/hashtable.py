@@ -55,6 +55,19 @@ class HashTable:
 
         Implement this.
         """
+        i = self.hash_index(key)
+        if self.table[i] is not None:
+            curr = self.table[i]
+            while curr:
+                # Overwrites the value
+                if curr.key == key:
+                    curr.value = value
+                    return
+                if curr.next is None:
+                    curr.next = HashTableEntry(key, value)
+                    return
+                curr = curr.next
+            self.table[i] = HashTableEntry(key, value)
 
     def delete(self, key):
         """
@@ -64,6 +77,16 @@ class HashTable:
 
         Implement this.
         """
+        i = self.hash_index(key)
+        if not self.table[i]:
+            print('Not found')
+
+        curr = self.table[i]
+        while curr:
+            if curr.key == key:
+                curr.value = None
+                return
+            curr = curr.next
 
     def get(self, key):
         """
@@ -73,6 +96,14 @@ class HashTable:
 
         Implement this.
         """
+        i = self.hash_index(key)
+        if not self.table[i]:
+            return None
+        curr = self.table[i]
+        while curr:
+            if curr.key == key:
+                return curr.value
+            curr = curr.next
 
     def resize(self):
         """
